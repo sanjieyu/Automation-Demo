@@ -1,4 +1,4 @@
-# Author:Yi Sun(Tim) 2023-2-7
+# Author:Yi Sun(Tim) 2020-2-7
 
 '''API Testing for iTrazoADI 2.0'''
 
@@ -41,26 +41,7 @@ class AllAPI(unittest.TestCase,ExcelData):
     def test_004(self):
         '''verify the status code for POST of AM_CreateCustomer API'''
         self.url = self.data[3]['url']
-        self.header = {
-            'content-length': '342',
-            'origin': 'https://portal.dev.itrazoadi.com',
-            'referer': 'https://portal.dev.itrazoadi.com/',
-            'host': '65.8.134.6:443',
-            'accept': 'application/json, text/plain, */*',
-            'accept-encoding': 'gzip, deflate, br',
-            'accept-language': 'en,en-US;q=0.9,en-GB;q=0.8',
-            'connection': 'keep-alive',
-            'content-type': 'application/json;charset=UTF-8',
-            # "content-type": "application/x-amz-json-1.1",
-            # 'x-amz-target':'AWSCognitoIdentityProviderService.InitiateAuth',
-            'sec-ch-ua': '"Not_A Brand";v="99", "Microsoft Edge";v="109", "Chromium";v="109"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'cross-site',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36 Edg/109.0.1518.78',
-        }
+        self.header = self.data[3]['header']
         self.data1 = self.data[3]['request_data']
         self.r = requests.request(method=self.data[3]['method'], url=self.url, data=self.data1)
         self.assertEqual(self.data[3]['expect_data'],self.r.status_code)
@@ -68,7 +49,6 @@ class AllAPI(unittest.TestCase,ExcelData):
     def test_005(self):
         '''verify the status code for AM_Observation API without login'''
         self.url = self.data[4]['url']
-        # self.auth = "Bearer eyJraWQiOiJIVXhrVFJjKzVTakc4Y1p0XC9XTUo2RWtxRG1ja3NpMTlXWWZcLzNKdVEwSGM9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJjMzUyNGQ3YS01ZTkzLTQ5ODItOTZhYy0yNDBkNWMzOWYzOWUiLCJjb2duaXRvOmdyb3VwcyI6WyJvcmdhbmljb2xpdmVvaWwiXSwiZW1haWxfdmVyaWZpZWQiOnRydWUsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1zb3V0aGVhc3QtMi5hbWF6b25hd3MuY29tXC9hcC1zb3V0aGVhc3QtMl9lVWpEc0ZIRnMiLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiOmZhbHNlLCJjb2duaXRvOnVzZXJuYW1lIjoicWlhbiIsImF1ZCI6IjFraXJnOXBnZnVtanZpdTVvNXVldmk5NTNrIiwiZXZlbnRfaWQiOiI2YmYxMWM3NC0wODM1LTQ1NTAtYTNhYy0yNDFiOTFmYjAzNWYiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTY3NTgxMDc3OCwibmFtZSI6IlFpYW4iLCJwaG9uZV9udW1iZXIiOiIrNjE0MjQxMTgxMzUiLCJleHAiOjE2NzU4MTQzNzgsImN1c3RvbTpyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzU4MTA3NzgsImVtYWlsIjoicWlhbkBpdHJhem90cmFjZXRlY2guY29tIn0.cewhkSFU-hiRBhYfUTVMjZl9A2_5IC82oIpf0HvTl-BZAHeUs2vQE0Qgf-s0L9ee7CEWJkXS-o-99fNDKZQCl9kEJEQ4fE_YIzsvmt3fgReqiubosSsBzKP2nKqPedVDmU_ItfQBIJzp6_Cbm1klGjn0taUkeLc9VluEWyDj4AD4Jv7KjpdpVPCLbfIUSB7yb8sfgxDu_78DtqmJ0VnUM6HKHd22ESE_bsJbV9pgA5XVVDFqNsOpg5_aL8TFYQ4LZ1LOVQQLhHASGAwfzF6TeoZaEM4JXdpizOq-WHGdaVAHADen-I5RUjcG7amqtAismYYXNYMGQo-407GmUzVlhw"
         self.r = requests.request(method=self.data[4]['method'],url=self.url)
         self.assertEqual(self.data[4]['expect_data'],self.r.status_code)
 
@@ -82,10 +62,9 @@ class AllAPI(unittest.TestCase,ExcelData):
     def test_007(self):
         '''verify the ADD function for AM_MasterData_CreatePreSet API'''
         self.url = self.data[6]['url']
-        self.data_old = self.data[6]['request_data']
-        # self.data = json.loads(self.data_old)           # change "string indices must be integers"
-        # print('data is:',self.data)
-        self.r = requests.request(method=self.data[6]['method'],url=self.url,data=self.data_old)
+        self.data_original = self.data[6]['request_data']
+        self.data = json.loads(self.data_original)           # change "string indices must be integers"
+        self.r = requests.request(method=self.data[6]['method'],url=self.url,data=self.data)
         self.assertEqual(self.data[6]['expect_data'],self.r.status_code)
         # self.list = requests.request(method=self.data[5]['method'], url=self.data[5]['url'])    # go to last case to get the list dict
         # responsedata = json.loads(self.list.text)
@@ -151,63 +130,55 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.url = self.data[12]['url']
         self.r = requests.request(method=self.data[12]['method'], url=self.url)
         self.assertIn(self.data[12]['response'],self.r.text)
-    #
-    # @unittest.skip
+ 
     def test_014(self):
         '''verify the status code for AM_AssetTrackingList API'''
         self.url = self.data[13]['url']
         self.r = requests.request(method=self.data[13]['method'], url=self.url)
         self.assertEqual(self.data[13]['expect_data'],self.r.status_code)
 
-    # @unittest.skip
     def test_015(self):
         '''verify the function for AM_AssetTrackingList,return the correct "QR code"'''
         self.url = self.data[14]['url']
         self.r = requests.request(method=self.data[14]['method'], url=self.url)
         self.assertIn(self.data[14]['response'],self.r.text)
 
-    # @unittest.skip
     def test_016(self):
         '''verify the function for AM_AssetTrackingList,return the correct "alert_name"'''
         self.url = self.data[15]['url']
         self.r = requests.request(method=self.data[15]['method'], url=self.url)
         self.assertIn(self.data[15]['response'],self.r.text)
 
-    # @unittest.skip
     def test_017(self):
         '''verify the function for AM_AssetTrackingList,return the correct "GEOFENCE type"'''
         self.url = self.data[16]['url']
         self.r = requests.request(method=self.data[16]['method'], url=self.url)
         self.assertIn(self.data[16]['response'],self.r.text)
 
-    # @unittest.skip
     def test_018(self):
         '''verify the function for AM_AssetTrackingList,return the correct "asset_ID"'''
         self.url = self.data[17]['url']
         self.r = requests.request(method=self.data[17]['method'], url=self.url)
         self.assertIn(self.data[17]['response'],self.r.text)
 
-    # @unittest.skip
     def test_019(self):
         '''verify the function for AM_AssetTrackingList,return the correct "Current_deviceID"'''
         self.url = self.data[18]['url']
         self.r = requests.request(method=self.data[18]['method'], url=self.url)
         self.assertIn(self.data[18]['response'],self.r.text)
 
-    # @unittest.skip
     def test_020(self):
         '''verify the function for AM_AssetTrackingList,return the correct "Geofence Name"'''
         self.url = self.data[19]['url']
         self.r = requests.request(method=self.data[19]['method'], url=self.url)
         self.assertIn(self.data[19]['response'],self.r.text)
-    #
+    
     def test_021(self):
         '''verify the status code for AM_MasterData_AlertRules API'''
         self.url = self.data[20]['url']
         self.r = requests.request(method=self.data[20]['method'], url=self.url)
         self.assertEqual(self.data[20]['expect_data'],self.r.status_code)
 
-    # @unittest.skip
     def test_022(self):
         '''verify the function for AM_MasterData_AlertRules,return the correct "Alert Preset Name"'''
         self.url = self.data[21]['url']
@@ -310,24 +281,11 @@ class AllAPI(unittest.TestCase,ExcelData):
     def test_036(self):
         '''verify the POST for login API'''
         self.url = self.data[35]['url']
-        self.header = {
-            "content-type":"application/x-amz-json-1.1",
-            "x-amz-target":"AWSCognitoIdentityProviderService.InitiateAuth",
-        }
-        # self.data1 = {
-        #     "AuthFlow":"USER_PASSWORD_AUTH",
-        #     "ClientId":"1kirg9pgfumjviu5o5uevi953k",
-        #     "AuthParameters":{"USERNAME":"qian","PASSWORD":"Qian@123"},
-        #     "ClientMetadata":{}
-        # }
-        # self.r = requests.request(method=self.data[35]['method'], url=self.url, headers=self.header, json=self.data1)   # use json=data if hardcoding the self.data1
-        self.data1 = self.data[36]['request_data']
-        # self.data2 = {"AuthFlow": "USER_PASSWORD_AUTH", "ClientId": "1kirg9pgfumjviu5o5uevi953k",
-        #               "AuthParameters": {"USERNAME": "qian", "PASSWORD": "Qian@123"}, "ClientMetadata": {}}
-        # self.r = requests.request(method=self.data[35]['method'], url=self.url, headers=self.header,data=json.dumps(self.data2))  # Line 289-291 for using the data format as a dict
+        self.header = self.data[35]['header']
+        self.data1 = self.data[35]['request_data']
         self.r = requests.request(method=self.data[35]['method'], url=self.url, headers=self.header, data=self.data1)    # use data=data if use config file read the self.data1
         self.assertEqual(self.data[35]['expect_data'],self.r.status_code)
-#
+
     def test_037(self):
         '''Get the correct token from login API'''
         # global token_info1
@@ -342,7 +300,7 @@ class AllAPI(unittest.TestCase,ExcelData):
         print('token is:',token_info)
         self.assertIn(self.data[36]['response'],token_info)
         # return token_info1
-#
+
     def test_038(self):
         '''verify the status code for AM_MasterData_CustomerDirectory API'''
         self.url = self.data[37]['url']
@@ -365,34 +323,9 @@ class AllAPI(unittest.TestCase,ExcelData):
         count_number = self.response['ScannedCount']
         self.assertGreaterEqual(count_number,0)
 
-    @unittest.skip
     def test_041(self):
         '''Get the function for AM_MasterData_CustomerDirectory_CreateMember'''
         self.url = self.data[40]['url']
-        # self.header = {
-        #     'authority': 'x8iwc8pij7.execute-api.ap-southeast-2.amazonaws.com',
-        #     'method': 'POST',
-        #     'path': '/stage/ADI/dropdowns',
-        #     'scheme': 'https',
-        #     'content-length': '342',
-        #     'origin': 'https://portal.staging.itrazoadi.com',
-        #     'referer': 'https://portal.staging.itrazoadi.com/',
-        #     # 'host': '65.8.33.32:443',
-        #     'accept': 'application/json, text/plain, */*',
-        #     'accept-encoding': 'gzip, deflate, br',
-        #     'accept-language': 'en,en-US;q=0.9,en-GB;q=0.8',
-        #     'connection': 'keep-alive',
-        #     'content-type': 'application/json;charset=UTF-8',
-        #     # "content-type": "application/x-amz-json-1.1",
-        #     'x-amz-target':'AWSCognitoIdentityProviderService.InitiateAuth',
-        #     'sec-ch-ua': '"Not_A Brand";v="99", "Microsoft Edge";v="109", "Chromium";v="109"',
-        #     'sec-ch-ua-mobile': '?0',
-        #     'sec-ch-ua-platform': '"Windows"',
-        #     'sec-fetch-dest': 'empty',
-        #     'sec-fetch-mode': 'cors',
-        #     'sec-fetch-site': 'cross-site',
-        #     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36 Edg/109.0.1518.78',
-        # }
         self.data1 = self.data[40]['request_data']
         self.r = requests.request(method=self.data[40]['method'], url=self.url, data=self.data1)
         print('response is:',self.r.text)
@@ -434,16 +367,13 @@ class AllAPI(unittest.TestCase,ExcelData):
         count_number = self.response['ScannedCount']
         self.assertGreaterEqual(count_number,0)
 
-    # @unittest.skip
-    # no need because it has no this feature
-
-    #def test_047(self):
-        #'''verify the status code for POST for CRM_Supplier_CreateSupplier API'''
-        #self.url = self.data[46]['url']
-        #self.requestdata = self.data[46]['request_data']
-        #self.r = requests.request(method=self.data[46]['method'], url=self.url, data=self.requestdata)
-        #self.assertEqual(self.data[46]['expect_data'],self.r.status_code)
-
+    @unittest.skip
+    def test_047(self):
+        '''verify the status code for POST for CRM_Supplier_CreateSupplier API'''
+        self.url = self.data[46]['url']
+        self.requestdata = self.data[46]['request_data']
+        self.r = requests.request(method=self.data[46]['method'], url=self.url, data=self.requestdata)
+        self.assertEqual(self.data[46]['expect_data'],self.r.status_code)
 
     def test_048(self):
         '''verify the status code for AM_Asset_Tracking_AddAsset API'''
@@ -486,7 +416,7 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.url = self.data[52]['url']
         self.r = requests.request(method=self.data[52]['method'], url=self.url)
         self.assertIn(self.data[52]['response'],self.r.text)
-    #
+    
     def test_054(self):
         '''verify the function for AM_Sensors,should return the correct asset id.'''
         self.url = self.data[53]['url']
@@ -538,7 +468,6 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.r = requests.request(method=self.data[60]['method'], url=self.url,data=self.requestdata)
         self.assertEqual(self.data[60]['expect_data'],self.r.status_code)
 
-    @unittest.skip
     def test_062(self):
         '''verify the EDIT function for CRM_Supplier,verify the return code for PUT method.'''
         self.url = self.data[61]['url']
@@ -546,7 +475,6 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.r = requests.request(method=self.data[61]['method'], url=self.url,data=self.requestdata)
         self.assertEqual(self.data[61]['expect_data'],self.r.status_code)
 
-    @unittest.skip
     def test_063(self):
         '''verify the EDIT function for CRM_Supplier,verify the response value for PUT method.'''
         self.url = self.data[62]['url']
@@ -554,7 +482,6 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.r = requests.request(method=self.data[62]['method'], url=self.url,data=self.requestdata)
         self.assertIn(self.data[62]['response'],self.r.text)
 
-    @unittest.skip
     def test_064(self):
         '''verify the EDIT function for CRM_Supplier_address,verify the return code for PUT method.'''
         self.url = self.data[63]['url']
@@ -562,7 +489,6 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.r = requests.request(method=self.data[61]['method'], url=self.url,data=self.requestdata)
         self.assertEqual(self.data[63]['expect_data'],self.r.status_code)
 
-    @unittest.skip
     def test_065(self):
         '''verify the EDIT function for CRM_Supplier_address,verify the response value for PUT method.'''
         self.url = self.data[64]['url']
@@ -578,7 +504,6 @@ class AllAPI(unittest.TestCase,ExcelData):
         print('url is',self.url+self.requestdata)
         self.r = requests.request(method=self.data[65]['method'], url=(self.url+self.requestdata))
         self.assertEqual(self.data[65]['expect_data'],self.r.status_code)
-
 
     def test_067(self):
         '''verify the active status for CRM_CustomerDetails API'''
@@ -633,9 +558,9 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.requestdata = self.data[73]['request_data']
         self.r = requests.request(method=self.data[73]['method'], url=self.url,data=self.requestdata)
         self.assertEqual(self.data[73]['expect_data'],self.r.status_code)
-        response_data = json.loads(self.r.text)      # change to dict
-        global record_id                             # global this record_id to let the next function call
-        record_id = response_data['record_ID']       # get the ID for the new added
+        response_data = json.loads(self.r.text)      
+        global record_id                             
+        record_id = response_data['record_ID']      
         return record_id
 
     def test_075(self):
@@ -729,15 +654,14 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.r = requests.request(method=self.data[86]['method'],url=self.url,data=self.requestdata)
         self.assertIn(self.data[86]['response'],self.r.text)
 
-    # @unittest.skip
-    # def test_088(self):
-    #     '''verify the ADD function for CRM_Contact'''
-    #     self.url = self.data[87]['url']
-    #     self.requestdata = self.data[87]['request_data']
-    #     self.r = requests.request(method=self.data[87]['method'],url=self.url,data=self.requestdata)
-    #     self.assertEqual(self.data[87]['expect_data'],self.r.status_code)
+    @unittest.skip
+    def test_088(self):
+        '''verify the ADD function for CRM_Contact'''
+        self.url = self.data[87]['url']
+        self.requestdata = self.data[87]['request_data']
+        self.r = requests.request(method=self.data[87]['method'],url=self.url,data=self.requestdata)
+        self.assertEqual(self.data[88]['expect_data'],self.r.status_code)
 
-    # @unittest.skip
     def test_089(self):
         '''verify the EDIT function for CRM_Contact, verify the return code'''
         self.url = self.data[88]['url']
@@ -745,7 +669,6 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.r = requests.request(method=self.data[88]['method'],url=self.url,data=self.requestdata)
         self.assertEqual(self.data[88]['expect_data'],self.r.status_code)
 
-    # @unittest.skip
     def test_090(self):
         '''verify the EDIT function for CRM_Contact, update the name'''
         self.url = self.data[89]['url']
@@ -753,7 +676,6 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.r = requests.request(method=self.data[89]['method'],url=self.url,data=self.requestdata)
         self.assertIn(self.data[89]['response'],self.r.text)
 
-    @unittest.skip
     def test_091(self):
         '''verify the EDIT function for CRM_Contact, update the email'''
         self.url = self.data[90]['url']
@@ -761,7 +683,6 @@ class AllAPI(unittest.TestCase,ExcelData):
         self.r = requests.request(method=self.data[90]['method'],url=self.url,data=self.requestdata)
         self.assertIn(self.data[90]['response'],self.r.text)
 
-    # @unittest.skip
     def test_092(self):
         '''verify the EDIT function for CRM_Contact, update the position'''
         self.url = self.data[91]['url']
