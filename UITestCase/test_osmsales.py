@@ -1,4 +1,4 @@
-# Author:Yi Sun(Tim) 2023-05-22
+# Author:Yi Sun(Tim) 2020-05-22
 
 '''Test Sales Page'''
 
@@ -33,67 +33,69 @@ class Test_Sales(unittest.TestCase,Sales_Page):
     def test_sales_001(self):
         '''Verify the default section in sales page'''
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_salessection,('Open (0)','Closed (0)','Cancelled (0)','Production Work Order (PWO) (0)'))
+        self.assertEqual(('Open (0)','Closed (0)','Cancelled (0)','Production Work Order (PWO) (0)'),self.check_salessection)
 
     def test_sales_002(self):
         '''Verify the default values in open section of sales page'''
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_opendefault,('  New Purchase Order','Create PWO'))
+        self.assertEqual(('  New Purchase Order','Create PWO'),self.check_opendefault)
 
     def test_sales_003(self):
         '''Verify the search box in open section of sales page'''
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_opensearchbox,True)
+        self.assertEqual(True,self.check_opensearchbox)
 
     def test_sales_004(self):
         '''Verify the From date filter in open section of sales page'''
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_fromopen,True)
+        self.assertEqual(True,self.check_fromopen)
 
     def test_sales_005(self):
         '''Verify the To date filter in open section of sales page'''
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_toopen,True)
+        self.assertEqual(True,self.check_toopen)
 
     def test_sales_006(self):
         '''Verify the columns in Open section of Sales page'''
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_opentable,('ORDER NO.','STATUS','CUSTOMER','PURPOSE','PAYMENT','PACKAGING','PRODUCTS','EXPECTED DELIVERY'))
+        self.assertEqual(('ORDER NO.','STATUS','CUSTOMER','PURPOSE','PAYMENT','PACKAGING','PRODUCTS',
+                          'EXPECTED DELIVERY'),self.check_opentable)
 
     def test_sales_007(self):
         '''Verify the default values in closed section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_closed
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_closeddefault,('  New Purchase Order'))
+        self.assertEqual(('  New Purchase Order'),self.check_closeddefault)
 
     def test_sales_008(self):
         '''Verify the search box in closed section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_closed
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_closedsearchbox,True)
+        self.assertEqual(True,self.check_closedsearchbox)
 
     def test_sales_009(self):
         '''Verify the From date filter in closed section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_closed
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_fromclosed,True)
+        self.assertEqual(True,self.check_fromclosed)
 
     def test_sales_010(self):
         '''Verify the To date filter in closed section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_closed
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_toclosed,True)
+        self.assertEqual(True,self.check_toclosed)
 
     def test_sales_011(self):
         '''Verify the columns in closed section of Sales page'''
         self.driver.implicitly_wait(5)
         self.go_closed
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_closedtable,('ORDER NO.','STATUS','CUSTOMER','PURPOSE','PAYMENT','PACKAGING','PRODUCTS','EXPECTED DELIVERY'))
+        self.assertEqual(('ORDER NO.','STATUS','CUSTOMER','PURPOSE','PAYMENT','PACKAGING','PRODUCTS',
+                          'EXPECTED DELIVERY'),self.check_closedtable)
 
 
     def test_sales_012(self):
@@ -101,49 +103,49 @@ class Test_Sales(unittest.TestCase,Sales_Page):
         self.driver.implicitly_wait(5)
         self.go_cancelled
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_canceldefault,('  New Purchase Order'))
+        self.assertEqual(('  New Purchase Order'),self.check_canceldefault)
 
     def test_sales_013(self):
         '''Verify the search box in cancelled section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_cancelled
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_cancelsearchbox,True)
+        self.assertEqual(True,self.check_cancelsearchbox)
 
     def test_sales_014(self):
         '''Verify the From date filter in cancelled section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_cancelled
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_fromcancel,True)
+        self.assertEqual(True,self.check_fromcancel)
 
     def test_sales_015(self):
         '''Verify the To date filter in cancelled section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_cancelled
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_tocancel,True)
+        self.assertEqual(True,self.check_tocancel)
 
     def test_sales_016(self):
         '''Verify the search box in pwo section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_pwo
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_pwosearchbox,True)
+        self.assertEqual(True,self.check_pwosearchbox)
 
     def test_sales_017(self):
         '''Verify the From date filter in pwo section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_pwo
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_frompwo,True)
+        self.assertEqual(True,self.check_frompwo)
 
     def test_sales_018(self):
         '''Verify the To date filter in pwo section of sales page'''
         self.driver.implicitly_wait(5)
         self.go_pwo
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_topwo,True)
+        self.assertEqual(True,self.check_topwo)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
