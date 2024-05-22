@@ -1,4 +1,4 @@
-# Author:Yi Sun(Tim) 2023-4-03
+# Author:Yi Sun(Tim) 2020-4-03
 
 '''Test CRM Page'''
 
@@ -32,12 +32,12 @@ class CRMTest(unittest.TestCase,CRM_Page):
     def test_CRM_001(self):
         '''Verify the title of CRM Page'''
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_title,'RELATIONSHIP MANAGEMENT')
+        self.assertEqual('RELATIONSHIP MANAGEMENT',self.check_title)
 
     def test_CRM_002(self):
         '''Verify the default Sections in CRM Page'''
         self.driver.implicitly_wait(5)
-        self.assertEqual(self.check_defaultvalue,('Dashboard','Company','Contact','Task'))
+        self.assertEqual(('Dashboard','Company','Contact','Task'),self.check_defaultvalue)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
